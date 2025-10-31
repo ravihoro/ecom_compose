@@ -11,19 +11,25 @@ class ProductRepositoryImpl @Inject constructor(
     private val apiService: ApiService
 ) : ProductRepository{
 
-    override suspend fun getProducts(): List<Product> {
-        val dtos = apiService.getProducts()
+    override suspend fun getProducts(): Result<List<Product>> {
 
-        return dtos.map { dto ->
-            Product(
-                id = dto.id,
-                title = dto.title,
-                price = dto.price,
-                description = dto.description,
-                category = dto.category,
-                imageUrl = dto.imageUrl
-            )
+        return try{
+            val products = apiService.getProducts().map { dto ->
+                Product(
+                    id = dto.id,
+                    title = dto.title,
+                    price = dto.price,
+                    description = dto.description,
+                    category = dto.category,
+                    imageUrl = dto.imageUrl
+                )
+            }
+
+            Result.success(products)
+        }catch(e: Exception){
+            Result.failure(e)
         }
+
 
     }
 

@@ -4,6 +4,6 @@ import com.example.ecom.domain.model.Product
 
 interface ProductRepository {
 
-    suspend fun getProducts() : List<Product>
+    suspend fun getProducts() : Result<List<Product>>
 
 }
