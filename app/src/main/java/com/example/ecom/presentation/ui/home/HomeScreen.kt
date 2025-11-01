@@ -9,8 +9,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.ecom.core.components.ProductListView
 import com.example.ecom.presentation.viewmodel.ProductListViewModel
 import com.example.ecom.presentation.viewmodel.UiState
 
@@ -43,7 +43,7 @@ fun HomeScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center,
             ){
-                Text(text = "Data loaded")
+                ProductListView(products = s.products)
             }
         }
     }
