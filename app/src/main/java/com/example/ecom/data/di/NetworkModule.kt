@@ -1,5 +1,6 @@
 package com.example.ecom.data.di
 
+import com.example.ecom.data.remote.ApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -44,12 +45,16 @@ object NetworkModule{
         val contentType = "application/json".toMediaType()
 
         return Retrofit.Builder()
-            .baseUrl("https:fakestoreapi.com/")
+            .baseUrl("https://fakestoreapi.com/")
             .client(okHttpClient)
             .addConverterFactory(json.asConverterFactory(contentType = contentType))
             .build()
     }
 
+    @Provides
+    @Singleton
+    fun provideApiService(retrofit: Retrofit): ApiService =
+        retrofit.create(ApiService::class.java)
 
 
 }
