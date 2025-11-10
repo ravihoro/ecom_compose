@@ -7,4 +7,7 @@ interface ApiService {
     @GET("products")
     suspend fun getProducts(): List<ProductDto>
 
+    @GET("products/{id}")
+    suspend fun getProduct(id: Int): ProductDto
+
 }

@@ -1,5 +1,6 @@
 package com.example.ecom.data.repository
 
+import com.example.ecom.core.utils.toProduct
 import com.example.ecom.data.remote.ApiService
 import com.example.ecom.domain.model.Product
 import com.example.ecom.domain.repository.ProductRepository
@@ -12,25 +13,25 @@ class ProductRepositoryImpl @Inject constructor(
 ) : ProductRepository{
 
     override suspend fun getProducts(): Result<List<Product>> {
-
         return try{
             val products = apiService.getProducts().map { dto ->
-                Product(
-                    id = dto.id,
-                    title = dto.title,
-                    price = dto.price,
-                    description = dto.description,
-                    category = dto.category,
-                    imageUrl = dto.imageUrl
-                )
+                toProduct(dto)
             }
 
             Result.success(products)
         }catch(e: Exception){
             Result.failure(e)
         }
-
-
     }
+
+    override suspend fun getProduct(id: Int): Result<Product> {
+        return try{
+            val productDto = apiService.getProduct(id)
+            Result.success(toProduct(productDto = productDto))
+        }catch(e: Exception){
+            Result.failure(e)
+        }
+    }
+
 
 }
