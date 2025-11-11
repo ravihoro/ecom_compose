@@ -1,11 +1,11 @@
 package com.example.ecom.presentation.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ecom.domain.model.Product
 import com.example.ecom.domain.usecase.GetProductUseCase
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -19,11 +19,13 @@ sealed interface ProductDetailState {
     data class Error(val message: String): ProductDetailState
 }
 
+@HiltViewModel
 class ProductViewModel @Inject constructor(
     private val useCase: GetProductUseCase,
-    @Assisted private val productId: Int,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
+    private val productId: Int = checkNotNull(savedStateHandle["productId"])
     private val _productDetailState = MutableStateFlow<ProductDetailState>(ProductDetailState.Loading)
 
     val productDetailState: StateFlow<ProductDetailState> = _productDetailState

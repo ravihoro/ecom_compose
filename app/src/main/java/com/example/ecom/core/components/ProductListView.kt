@@ -12,7 +12,8 @@ import com.example.ecom.domain.model.Product
 
 @Composable
 fun ProductListView(
-    products: List<Product>
+    products: List<Product>,
+    onProductClick: (Int) -> Unit,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -26,7 +27,8 @@ fun ProductListView(
             key = { products[it].title },
         ){ idx ->
             ProductCard(
-                product = products[idx]
+                product = products[idx],
+                onProductClick
             )
         }
     }

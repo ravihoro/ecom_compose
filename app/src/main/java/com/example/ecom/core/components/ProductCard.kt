@@ -34,10 +34,16 @@ import com.example.ecom.core.utils.toPriceString
 import com.example.ecom.domain.model.Product
 
 @Composable
-fun ProductCard(product: Product) {
+fun ProductCard(
+    product: Product,
+    onProductClick: (Int) -> Unit,
+) {
     Card(
         shape = RoundedCornerShape(4.dp),
         elevation = CardDefaults.cardElevation(4.dp),
+        onClick = {
+            onProductClick(product.id)
+        }
     ) {
         Column(modifier = Modifier.padding(4.dp)) {
             Box(
